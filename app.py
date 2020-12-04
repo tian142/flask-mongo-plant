@@ -53,8 +53,8 @@ def create():
         # TODO: Make an `insert_one` database call to insert the object into the
         # database's `plants` collection, and get its inserted id. Pass the
         # inserted id into the redirect call below.
-
-        return redirect(url_for('detail', plant_id=''))
+        plant_id = plants_db.insert_one(new_plant).inserted_id
+        return redirect(url_for('detail', plant_id='plant_id'))
 
     else:
         return render_template('create.html')
