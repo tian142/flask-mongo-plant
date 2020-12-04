@@ -54,7 +54,7 @@ def create():
         # database's `plants` collection, and get its inserted id. Pass the
         # inserted id into the redirect call below.
         plant_id = plants_db.insert_one(new_plant).inserted_id
-        return redirect(url_for('detail', plant_id='plant_id'))
+        return redirect(url_for('detail', plant_id=plant_id))
 
     else:
         return render_template('create.html')
@@ -66,13 +66,13 @@ def detail(plant_id):
 
     # TODO: Replace the following line with a database call to retrieve *one*
     # plant from the database, whose id matches the id passed in via the URL.
-    plant_to_show = ''
+    plant_to_show = plants_db.find_one({'_id': ObjectId(plant_id)})
 
     # TODO: Use the `find` database operation to find all harvests for the
     # plant's id.
     # HINT: This query should be on the `harvests` collection, not the `plants`
     # collection.
-    harvests = ''
+    harvests = harvests_db.find({'plant_id': plant_id})
 
     context = {
         'plant': plant_to_show,
